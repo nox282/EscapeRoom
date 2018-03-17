@@ -9,14 +9,31 @@
 AParkourCharacter::AParkourCharacter() {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// Config variables default values
+	CameraYawSpeed = 100.0f;
+	CameraPitchSpeed = 100.0f;
+	CameraMaxPitch = 30.0f;
+	CameraMinPitch = -70.0f;
+
+	RunningSpeed = 300.0f;
+	MinSpeedToSlide = 50.0f;
+
+	SlideSpeedModifier = 3.0f;
+	CrouchSpeedModifier = 0.75f;
+	BackRunningSpeedModifier = 0.75f;
+	DashSpeedModifier = 5.0f;
+
+	DashCooldown = 2;
+	BulletJumpCoolDown = 1;
 }
 
 // Called when the game starts or when spawned
 void AParkourCharacter::BeginPlay() {
 	Super::BeginPlay();
+
 	CharacterSpringArm = this->FindComponentByClass<USpringArmComponent>();
 	CharacterCamera = this->FindComponentByClass<UCameraComponent>();
-	//CharacterMesh = this->Component;
 }
 
 // Called every frame
@@ -67,7 +84,6 @@ void AParkourCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Crouch",	EInputEvent::IE_Pressed, this, &AParkourCharacter::ToggleCrouch);
 }
 
-
 // Movements
 void AParkourCharacter::MoveForward(float amount) {
 	CharacterMovementInput += CharacterCamera->GetForwardVector() * amount;
@@ -96,4 +112,16 @@ void AParkourCharacter::ToggleCrouch() {
 
 bool AParkourCharacter::CanSlide() {
 	return GetVelocity().Size() > MinSpeedToSlide;
+}
+
+bool AParkourCharacter::IsJumping() {
+	return false;
+}
+
+bool AParkourCharacter::IsCrouching() {
+	return false;
+}
+
+bool AParkourCharacter::IsSliding() {
+	return false;
 }

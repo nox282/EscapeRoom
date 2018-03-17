@@ -34,8 +34,18 @@ public:
 	virtual void Jump();
 	virtual void ToggleCrouch();
 
-	UFUNCTION(BlueprintPure, Category = "ParkourCharacter")
-	virtual bool CanSlide();
+	// States
+	UFUNCTION(BlueprintPure, Category = "ParkourCharacterState")
+	bool CanSlide();
+
+	UFUNCTION(BlueprintPure, Category = "ParkourCharacterState")
+	bool IsJumping();
+	
+	UFUNCTION(BlueprintPure, Category = "ParkourCharacterState")
+	bool IsCrouching();
+	
+	UFUNCTION(BlueprintPure, Category = "ParkourCharacterState")
+	bool IsSliding();
 
 	// Frame Calls
 	virtual void MoveCharater();
@@ -43,25 +53,46 @@ public:
 
 
 private:
+	float CurrentSpeed;
 	FVector CharacterMovementInput;
 	FVector2D CameraMovementInput;
 
-
 	// Config
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacter", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
 	float CameraYawSpeed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacter", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
 	float CameraPitchSpeed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacter", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
 	float CameraMaxPitch;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacter", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
 	float CameraMinPitch;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacter", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float RunningSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
 	float MinSpeedToSlide;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float SlideSpeedModifier;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float CrouchSpeedModifier;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float BackRunningSpeedModifier;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float DashSpeedModifier;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float DashCooldown;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterConfig", meta = (AllowPrivateAccess = "true"))
+	float BulletJumpCoolDown;
 
 	// Component References
 	class USpringArmComponent* CharacterSpringArm;
