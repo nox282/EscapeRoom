@@ -7,7 +7,12 @@
 #include "StateMachine.generated.h"
 
 
-UCLASS(ClassGroup = ("ParkourCharacterComponent"), meta = (BlueprintSpawnableComponent))
+class ActorAction {
+public:
+	virtual void Execute() {};
+};
+
+UCLASS()
 class ESCAPEROOM_API UStateMachine : public UActorComponent {
 	GENERATED_BODY()
 
@@ -15,12 +20,27 @@ public:
 	// Sets default values for this component's properties
 	UStateMachine();
 
-	virtual int32 GetState();
-	virtual bool SetState(int32 key);
+	struct State {
+		bool IsActive;
+		ActorAction Action;
+
+		State() {};
+	};
+
+	int32 GetState();
+	bool SetState(int32 key);
+	bool CanTransition(int32 key);
+	bool IsAlready(int32 key);
 
 protected:
-	void Register(int32 key);
+	void Register(int32 key, ActorAction _Action);
+	virtual void RunState(State s) PURE_VIRTUAL(UStateMachine::RunState, );
+
+	TMap<int32, TArray<int32> > Transitions;
 
 private:
-	TMap<int32, bool> States;
+	int32 CurrentState;
+	TMap<int32, State> States;
+
+	bool DoTransition(int32 key);
 };
