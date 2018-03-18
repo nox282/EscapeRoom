@@ -47,7 +47,7 @@ void AParkourCharacter::BeginPlay() {
 	CharacterState = this->FindComponentByClass<UParkourCharacterSMComponent>();
 
 	if (CharacterState)
-		CharacterState->SetState(STATES::Is_Idle);
+		CharacterState->RequestStanding();
 
 	SetWalkSpeed(RunningSpeed);
 	SetAcceleration(Acceleration);
@@ -74,7 +74,7 @@ void AParkourCharacter::MoveCharater() {
 	if (IsDashing()) {
 		// We're Dashing, MoveForward
 		AddMovementInput(GetActorForwardVector());
-	} else if (CanRun()) {
+	} else if (CanMove()) {
 		// We're Running, Move in the CharacterMovementInput Direction
 		AddMovementInput(CharacterMovementInput); 
 	}
@@ -204,9 +204,9 @@ bool AParkourCharacter::CanDash() {
 	return GetSpeed() > MinSpeedToDash;
 }
 
-bool AParkourCharacter::CanRun() {
+bool AParkourCharacter::CanMove() {
 	if (CharacterState)
-		return CharacterState->CanTransitionToRun();
+		return CharacterState->CanTransitionToMove();
 	return false;
 }
 

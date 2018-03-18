@@ -8,9 +8,8 @@ UStateMachine::UStateMachine() {
 	CurrentState = 0;
 }
 
-void UStateMachine::Register(int32 index, ActorAction _Action) {
-	States.Add(index);
-	States[index].Action = _Action;
+void UStateMachine::Register(int32 index) {
+	States.Add(index, false);
 }
 
 int32 UStateMachine::GetState() {
@@ -18,27 +17,29 @@ int32 UStateMachine::GetState() {
 }
 
 bool UStateMachine::SetState(int32 key) {
+	UE_LOG(LogTemp, Warning, TEXT("Requested Key : %d"), -key); 
 	if (!CanTransition(key))
 		return false;
 	return DoTransition(key);
 }
 
 bool UStateMachine::CanTransition(int32 key) {
-	if (IsAlready(key)) return true;
+	if (IsAlready(key)) return CanRepeat(key);
 	if (!States.Contains(key)) return false;
 	if (!Transitions[CurrentState].Contains(key)) return false;
 	
 	return true;
 }
 
+bool UStateMachine::CanRepeat(int32 key) {
+	if (Transitions[CurrentState].Contains(-key)) return false;
+	else return true;
+}
 bool UStateMachine::DoTransition(int32 key) {
-	for (auto& Entry : States)
-		Entry.Value.IsActive = false;
-
-	States[key].IsActive = true;
+	States[CurrentState] = false;
+	States[key] = true;
 	CurrentState = key;
-	RunState(States[CurrentState]);
-
+	
 	return true;
 }
 

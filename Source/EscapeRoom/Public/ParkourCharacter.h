@@ -31,6 +31,7 @@ public:
 	virtual void StrafeRight(float scale);
 	virtual void PitchCamera(float axisValue);
 	virtual void YawCamera(float axisValue);
+
 	virtual void TryJump();
 	virtual void TryCrouch();
 	virtual void TryStanding();
@@ -57,7 +58,7 @@ public:
 	bool CanDash();
 
 	UFUNCTION(BlueprintPure, Category = "ParkourCharacterState")
-	bool CanRun();
+	bool CanMove();
 
 	UFUNCTION(BlueprintPure, Category = "ParkourCharacterState")
 	bool IsIdle();
@@ -148,8 +149,6 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterCooldowns", meta = (AllowPrivateAccess = "true"))
 	float BulletJumpCoolDown;
-
-
 
 	void SetWalkSpeed(float newSpeed);
 	void SetAcceleration(float newAccel);

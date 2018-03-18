@@ -27,7 +27,7 @@ public:
 	bool RequestCrouch();
 	bool RequestStanding();
 
-	bool CanTransitionToRun();
+	bool CanTransitionToMove();
 	bool CanTransitionToDash();
 
 	bool IsIdle();
@@ -38,12 +38,18 @@ public:
 	bool IsDashing();
 	bool IsSliding();
 
+private:
+	class AParkourCharacter* Owner;
+
 protected:
-	void RunState(State s);
+	void Register(int32 key, void (AParkourCharacter::*Action)());
+	void RunState(int32 key);
+	bool SetState(int32 key);
+
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	class AParkourCharacter* Owner;
+	TMap<int32, void (AParkourCharacter::*)()> Actions;
 
 	bool RefreshState();
 };
