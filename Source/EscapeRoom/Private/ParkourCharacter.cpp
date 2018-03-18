@@ -33,6 +33,7 @@ AParkourCharacter::AParkourCharacter() {
 	SlideFriction = 0.1f;
 
 	JumpForce = 1000.0f;
+	BulletJumpZOffset = 0.5f;
 
 	DashCooldown = 2;
 	BulletJumpCoolDown = 1;
@@ -121,8 +122,8 @@ void AParkourCharacter::NormalJump() {
 }
 
 void AParkourCharacter::BulletJump() {
-	FVector bulletJump = GetActorForwardVector();
-	bulletJump.Z += 1;
+	FVector bulletJump = CharacterCamera->GetForwardVector();
+	bulletJump.Z += BulletJumpZOffset;
 	LaunchCharacter(bulletJump * JumpForce, true, true);
 }
 

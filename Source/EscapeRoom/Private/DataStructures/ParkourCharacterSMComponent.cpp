@@ -3,24 +3,6 @@
 #include "ParkourCharacterSMComponent.h"
 #include "ParkourCharacter.h"
 
-
-/*class ParkourCharacterAction : public ActorAction {
-
-public:
-	ParkourCharacterAction(AParkourCharacter* _Instance, void (AParkourCharacter::*_Action)())
-		:Instance(_Instance), Action(_Action) {};
-	
-	void Execute();
-
-private:
-	void (AParkourCharacter::*Action)();
-	AParkourCharacter* Instance;
-};
-
-void ParkourCharacterAction::Execute() {
-	(Instance->*Action)();
-}*/
-
 UParkourCharacterSMComponent::UParkourCharacterSMComponent() {
 	Owner = Cast<AParkourCharacter>(GetOwner());
 	if (Owner) {

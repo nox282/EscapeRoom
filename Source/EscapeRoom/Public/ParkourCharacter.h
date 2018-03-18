@@ -139,9 +139,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterFrictionModifiers", meta = (AllowPrivateAccess = "true"))
 	float SlideFriction;
 
-	//	Jump Force Values
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterFrictionModifiers", meta = (AllowPrivateAccess = "true"))
+	//	Jump Values
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterJump", meta = (AllowPrivateAccess = "true"))
 	float JumpForce;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterJump", meta = (AllowPrivateAccess = "true"))
+	float BulletJumpZOffset;
 
 	//	Cooldowns Values
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ParkourCharacterCooldowns", meta = (AllowPrivateAccess = "true"))
